@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,27 +19,24 @@ public class Client implements Serializable{
 	@XmlAttribute(name = "Nombre")
 	private String Name;
 	private String Phone;
-	private String Time;
+	private LocalDateTime time;
 	private String Address;
 	private Integer Age;
 
+	public Client(Integer iD, String name, String phone, LocalDateTime time, String address, Integer age) {
+		super();
+		ID = iD;
+		Name = name;
+		Phone = phone;
+		this.time = time;
+		Address = address;
+		Age = age;
+	}
+	
+
 	public Client() {
-		this.ID = -1;
-		this.Name = "";
-		this.Phone = "";
-		this.Time = "";
-		this.Address = "";
-		this.Age = -1;
 	}
 
-	public Client(Integer ID, String Name, String Phone, String Time, String Address, Integer Age) {
-		this.ID = ID;
-		this.Name = Name;
-		this.Phone = Phone;
-		this.Time = Time;
-		this.Address = Address;
-		this.Age = Age;
-	}
 
 	public Integer getID() {
 		return ID;
@@ -63,14 +61,17 @@ public class Client implements Serializable{
 	public void setPhone(String phone) {
 		Phone = phone;
 	}
+	
 
-	public String getTime() {
-		return Time;
+	public LocalDateTime getTime() {
+		return time;
 	}
 
-	public void setTime(String time) {
-		Time = time;
+
+	public void setTime(LocalDateTime time) {
+		this.time = time;
 	}
+
 
 	public String getAddress() {
 		return Address;
@@ -108,6 +109,6 @@ public class Client implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Client [ID=" + ID + ", Name=" + Name + ", Phone=" + Phone + ", Time=" + Time + "]";
+		return "Cliente" +ID+ "\n-Nombre=" + Name + " Telefono=" + Phone + " Fecha del Registro=" + time;
 	}
 }

@@ -13,18 +13,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import enums.Category;
 
-
 @XmlRootElement(name = "RepoProduct")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RepoProduct {
 	private HashMap<Integer, Product> productList;
 	private static RepoProduct _instance;
-	
+
 	private RepoProduct() {
 		productList = new HashMap<Integer, Product>();
 	}
 
-	public HashMap<Integer,Product> getProductList() {
+	public HashMap<Integer, Product> getProductList() {
 		return productList;
 	}
 
@@ -46,15 +45,10 @@ public class RepoProduct {
 		return added;
 	}
 
-	public boolean removeProduct(Product p) {
-		boolean removed = false;
-		if (p != null) {
-			if (productList.containsKey(p.getID())) {
-				productList.remove(p.getID());
-				removed = true;
-			}
+	public void removeProduct(Integer id) {
+		if (productList.containsKey(id)) {
+			productList.remove(id);
 		}
-		return removed;
 	}
 
 	public void modifyName(Integer ID, String name) {
@@ -78,7 +72,7 @@ public class RepoProduct {
 	public void saveFile(String url) {
 		JAXBContext contexto;
 		try {
-			contexto =JAXBContext.newInstance(RepoProduct.class);
+			contexto = JAXBContext.newInstance(RepoProduct.class);
 			Marshaller m = ((JAXBContext) contexto).createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
@@ -105,8 +99,17 @@ public class RepoProduct {
 	public void modifyCategory(Integer ID, Category category) {
 		productList.get(ID).setCategory(category);
 	}
+
 	public Product searchProduct(Integer id) {
 		return productList.get(id);
+	}
+
+	public boolean Contains(Integer id) {
+		return productList.containsKey(id);
+	}
+
+	public boolean isEmpty() {
+		return productList.isEmpty();
 	}
 
 }

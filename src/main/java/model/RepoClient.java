@@ -51,12 +51,6 @@ public class RepoClient implements Serializable{
 		}
 	}
 	
-	public void modifyTime(Integer ID, String Time) {
-		if(this.clientlist.containsKey(ID)) {
-			clientlist.get(ID).setTime(Time);
-		}
-	}
-	
 	public void modifyAddress(Integer ID, String Address) {
 		if(this.clientlist.containsKey(ID)) {
 			clientlist.get(ID).setAddress(Address);
@@ -83,16 +77,21 @@ public class RepoClient implements Serializable{
 		return added;
 	}
 	
-	public boolean removeClient(Integer ID) {
-		boolean removed=false;
+	public Client removeClient(Integer ID) {
+		Client aux = new Client();
 		if(this.clientlist.containsKey(ID)) {
-			this.clientlist.remove(ID);
-			removed=true;
+			aux=this.clientlist.get(ID);
+			this.clientlist.remove(ID);	
+			return aux;
 		}
-		return removed; 
+		return null;
+		
 	}
 	public HashMap<Integer, Client> getClientList(){
 		return clientlist;
+	}
+	public boolean Contains(Integer id) {
+		return clientlist.containsKey(id);
 	}
 
 	public void saveFile(String url) {

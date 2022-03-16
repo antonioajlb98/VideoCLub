@@ -10,8 +10,20 @@ import model.Product;
 import model.RepoProduct;
 
 public class Vista {
+	
 	RepoProduct RepoProducto = RepoProduct.getInstance();
 	Scanner teclado = new Scanner(System.in);
+	
+	private Vista() {
+	}
+	private static Vista v;
+	public static Vista getInstance() {
+		if(v==null) {
+			v= new Vista();
+		}
+		return v;
+	}
+	
 
 	public void showMainMenu() {
 		System.out.println("------------------------------------------------------------------------------------------");
@@ -38,8 +50,9 @@ public class Vista {
 		System.out.println("2. Eliminar cliente");
 		System.out.println("3. Modificar cliente");
 		System.out.println("4. Mostrar clientes");
-		System.out.println("5. Reservas");
-		System.out.println("6. Volver");
+		System.out.println("5. Buscar Cliente por ID");
+		System.out.println("6. Reservas");
+		System.out.println("7. Volver");
 	}
 
 	public void showMenuProduct() {
@@ -62,10 +75,9 @@ public class Vista {
 	public void showMenuModifyClient() {
 		System.out.println("1. Modificar nombre");
 		System.out.println("2. Modificar telefono");
-		System.out.println("3. Modificar fecha de alta");
-		System.out.println("4. Modificar direccion");
-		System.out.println("5. Modificar edad");
-		System.out.println("6. Volver");
+		System.out.println("3. Modificar direccion");
+		System.out.println("4. Modificar edad");
+		System.out.println("5. Volver");
 	}
 
 	public void showMenuModifyProduct() {
@@ -179,10 +191,6 @@ public class Vista {
 				;
 		} while (valid);
 		return opcion;
-	}
-
-	public void showClien(Object o) {
-		System.out.println(o);
 	}
 
 	public Integer opcMenu7() {

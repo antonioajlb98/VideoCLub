@@ -6,5 +6,4 @@ public class Ejecutable {
 		Controller c = new Controller();
 		c.run();
 	}
-
 }

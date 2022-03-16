@@ -13,7 +13,7 @@ public class Reservation implements Serializable {
     private LocalDateTime FinalDate;
     private Status status;
     private Client client;
-    private Product product;
+    private Copia copia;
 
     public Reservation(){
         this.ID=-1;
@@ -21,16 +21,16 @@ public class Reservation implements Serializable {
         this.FinalDate=null;
         this.status=null;
         this.client=null;
-        this.product=null;
+        this.copia=null;
     }
 
-    public Reservation(Integer ID, LocalDateTime Date, LocalDateTime FinalDate, Status status,Client client, Product product){
+    public Reservation(Integer ID, LocalDateTime Date, LocalDateTime FinalDate, Status status,Client client,Copia copy){
         this.ID=ID;
         this.DateReser=Date;
         this.FinalDate=FinalDate;
         this.status=status;
         this.client=client;
-        this.product=product;
+        this.copia=copy;
     }
    
     public Integer getID() {
@@ -72,12 +72,12 @@ public class Reservation implements Serializable {
         this.client = client;
     }
 
-    public Product getProduct() {
-        return product;
+    public Product getCopia() {
+        return copia;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setCopia(Copia copy) {
+        this.copia = copy;
     }
 
     public boolean equals(Object obj){
@@ -105,7 +105,7 @@ public class Reservation implements Serializable {
                 ", FinalDate='" + FinalDate + '\'' +
                 ", status=" + status +
                 ", client=" + client +
-                ", product=" + product +
+                ", product=" + copia +
                 '}';
     }
 }

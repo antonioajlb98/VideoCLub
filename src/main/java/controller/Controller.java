@@ -12,228 +12,308 @@ import model.RepoCopia;
 import model.RepoReservation;
 import model.Reservation;
 
-public class Controller{
-	Copia copia;
-	RepoCopia RepoCopia;
-	Vista vista = new Vista();
-	Utils u = new Utils();
-	RepoClient RepoCliente = RepoClient.getInstance();
-	Client client = new Client();
+public class Controller {
+
+	RepoCopia rCopy = RepoCopia.getInstance();
+	RepoProduct rProduct = RepoProduct.getInstance();
+	RepoClient rClient = RepoClient.getInstance();
+	RepoReservation rReserva = RepoReservation.getInstance();
 	Product product;
-	RepoProduct RepoProducto = RepoProduct.getInstance();
+	Copia copy;
+	Client client = new Client();
 	Reservation reserva;
-	RepoReservation RepoReserva = RepoReservation.getInstance();
-	
-	
-	private void switchMain(int op) {
+	Vista v = Vista.getInstance();
+	Utils u = Utils.getInstance();
+
+	public void switchMain(int op) {
 		switch (op) {
-		case 1: vista.showMenuClient();
-				switchMenuCliente(vista.opcMenu7());
-				break;
-		case 2: vista.showMenuProduct();
-				switchMenuProduct(vista.opcMenu6());
-				break;
-		case 3: vista.print("Gracias por utilizar nuestro software");
-				break;
+		case 1:
+			v.showMenuClient();
+			switchMenuCliente(v.opcMenu7());
+			break;
+		case 2:
+			v.showMenuProduct();
+			switchMenuProduct(v.opcMenu6());
+			break;
+		case 3:
+			v.print("Gracias por utilizar nuestro software");
+			break;
 		}
 	}
-	
+
 	private void switchMenuCliente(int op) {
 		switch (op) {
-		case 1: RepoCliente.addClient(u.readClient());
-				RepoCliente.saveFile("cliente.xml");	
-				vista.showMenuClient();
-				switchMenuCliente(vista.opcMenu7());
-				break;
-		case 2: Integer id6 = vista.leeEntero("Introduce el ID del cliente");
-				RepoCliente.removeClient(id6);
-				RepoCliente.saveFile("cliente.xml");
-				vista.showMenuClient();
-				switchMenuCliente(vista.opcMenu7());
-				break;
-		case 3: vista.showMenuModifyClient();
-				switchMenuModifyClient(vista.opcMenu6());
-				break;
-		case 4: vista.showClientList(RepoCliente.getClientList());
-				vista.showMenuClient();
-				switchMenuCliente(vista.opcMenu7());
-				break;
-		case 5: Integer id = vista.leeEntero("Introduce el ID del cliente");
-				vista.showObject(RepoCliente.searchClient(id));
-				vista.showMenuClient();
-				switchMenuCliente(vista.opcMenu7());
-				break;
-		case 6: vista.showMenuReservation();
-				vista.showMenuReservation();
-				switchMenuReservation(vista.opcMenu6());
-				break;
-		case 7: vista.showMainMenu();
-				switchMain(vista.opcMenu3());
-				break;
+		case 1:
+			rClient.addClient(u.readClient());
+			rClient.saveFile("cliente.xml");
+			v.showMenuClient();
+			switchMenuCliente(v.opcMenu7());
+			break;
+		case 2:
+			Integer id6 = v.leeEntero("Introduce el ID del cliente");
+			v.showObject("Cliente Borrado= " + rClient.removeClient(id6));
+			rClient.saveFile("cliente.xml");
+			v.showMenuClient();
+			switchMenuCliente(v.opcMenu7());
+			break;
+		case 3:
+			v.showMenuModifyClient();
+			switchMenuModifyClient(v.opcMenu6());
+			break;
+		case 4:
+			v.showClientList(rClient.getClientList());
+			v.showMenuClient();
+			switchMenuCliente(v.opcMenu7());
+			break;
+		case 5:
+			Integer id = v.leeEntero("Introduce el ID del cliente");
+			v.showObject(rClient.searchClient(id));
+			v.showMenuClient();
+			switchMenuCliente(v.opcMenu7());
+			break;
+		case 6:
+			v.showMenuReservation();
+			v.showMenuReservation();
+			switchMenuReservation(v.opcMenu6());
+			break;
+		case 7:
+			v.showMainMenu();
+			switchMain(v.opcMenu3());
+			break;
 		}
 	}
-	
+
 	private void switchMenuProduct(int op) {
 		switch (op) {
-		case 1: RepoProducto.addProduct(u.readProduct());
-				RepoProducto.saveFile("producto.xml");
-				vista.showMenuProduct();
-				switchMenuProduct(vista.opcMenu6());
-				break;
-		case 2: 
-				RepoProducto.saveFile("producto.xml");
-				vista.showMenuProduct();
-				switchMenuProduct(vista.opcMenu6());
-				break;
-		case 3: vista.showMenuModifyProduct();
-				switchModifyProduct(vista.opcMenu5());
-				break;
-		case 4: vista.showProductList(RepoProducto.getProductList());
-				vista.showMenuProduct();
-				switchMenuProduct(vista.opcMenu6());
-				break;
-		case 5: Integer id2 = vista.leeEntero("Introduce el ID del producto");
-				RepoProducto.searchProduct(id2);
-				break;
-		case 6: vista.showMainMenu();
-				switchMain(vista.opcMenu3());
-				break;
+		case 1:
+			rProduct.addProduct(u.readProduct());
+			rProduct.saveFile("producto.xml");
+			v.showMenuProduct();
+			switchMenuProduct(v.opcMenu6());
+			break;
+		case 2:
+			Integer id = v.leeEntero("Introduzca la ID del producto");
+			rProduct.removeProduct(id);
+			rProduct.saveFile("producto.xml");
+			v.showMenuProduct();
+			switchMenuProduct(v.opcMenu6());
+			break;
+		case 3:
+			v.showMenuModifyProduct();
+			switchModifyProduct(v.opcMenu5());
+			break;
+		case 4:
+			if (rProduct.isEmpty()) {
+				v.print("No hay Productos para mostrar");
+			}
+			v.showProductList(rProduct.getProductList());
+			v.showMenuProduct();
+			switchMenuProduct(v.opcMenu6());
+			break;
+		case 5:
+			Integer id2 = v.leeEntero("Introduce el ID del producto");
+			v.showObject(rProduct.searchProduct(id2));
+			break;
+		case 6:
+			v.showMainMenu();
+			switchMain(v.opcMenu3());
+			break;
 		}
 	}
-	
+
 	private void switchMenuModifyClient(int op) {
 		switch (op) {
-		case 1: Integer id = vista.leeEntero("Introduzca el ID del cliente");
-				String name=vista.leeString("Introduzca el nuevo nombre");
-				RepoCliente.modifyName(id, name);
-				RepoCliente.saveFile("cliente.xml");
-				vista.showMenuModifyClient();
-				switchMenuModifyClient(vista.opcMenu6());
-				break;
-		case 2: Integer id2 = vista.leeEntero("Introduzca el ID del cliente");
-				String telef=vista.leeString("Introduzca el nuevo telefono");
-				RepoCliente.modifyPhone(id2, telef);
-				RepoCliente.saveFile("cliente.xml");
-				vista.showMenuModifyClient();
-				switchMenuModifyClient(vista.opcMenu6());
-				break;
-		case 3: Integer id3 = vista.leeEntero("Introduzca el ID del cliente");
-				String fecha=vista.leeString("Introduzca la fecha de alta");
-				RepoCliente.modifyTime(id3, fecha);
-				RepoCliente.saveFile("cliente.xml");
-				vista.showMenuModifyClient();
-				switchMenuModifyClient(vista.opcMenu6());
-				break;
-		case 4: Integer id4 = vista.leeEntero("Introduzca el ID del cliente");
-				String dir = vista.leeString("Introduzca la nueva direccion");
-				RepoCliente.modifyAddress(id4, dir);
-				RepoCliente.saveFile("cliente.xml");
-				vista.showMenuModifyClient();
-				switchMenuModifyClient(vista.opcMenu6());
-				break;
-		case 5: Integer id5 = vista.leeEntero("Introduzca el ID del cliente");
-				Integer edad = vista.leeEntero("Introduzca la edad");
-				RepoCliente.modifyAge(id5, edad);
-				RepoCliente.saveFile("cliente.xml");
-				vista.showMenuModifyClient();
-				switchMenuModifyClient(vista.opcMenu6());
-				break;
-		case 6: vista.showMenuClient();
-				switchMenuCliente(vista.opcMenu6());
-				break;
+		case 1:
+			Integer id = v.leeEntero("Introduzca el ID del cliente");
+			searchKeyClienttoModify(id);
+			String name = v.leeString("Introduzca el nuevo nombre");
+			rClient.modifyName(id, name);
+			rClient.saveFile("cliente.xml");
+			v.showMenuModifyClient();
+			switchMenuModifyClient(v.opcMenu6());
+			break;
+		case 2:
+			Integer id2 = v.leeEntero("Introduzca el ID del cliente");
+			searchKeyClienttoModify(id2);
+			String telef = v.leeString("Introduzca el nuevo telefono");
+			rClient.modifyPhone(id2, telef);
+			rClient.saveFile("cliente.xml");
+			v.showMenuModifyClient();
+			switchMenuModifyClient(v.opcMenu6());
+			break;
+		case 3:
+			Integer id4 = v.leeEntero("Introduzca el ID del cliente");
+			searchKeyClienttoModify(id4);
+			String dir = v.leeString("Introduzca la nueva direccion");
+			rClient.modifyAddress(id4, dir);
+			rClient.saveFile("cliente.xml");
+			v.showMenuModifyClient();
+			switchMenuModifyClient(v.opcMenu6());
+			break;
+		case 4:
+			Integer id5 = v.leeEntero("Introduzca el ID del cliente");
+			searchKeyClienttoModify(id5);
+			Integer edad = v.leeEntero("Introduzca la edad");
+			rClient.modifyAge(id5, edad);
+			rClient.saveFile("cliente.xml");
+			v.showMenuModifyClient();
+			switchMenuModifyClient(v.opcMenu6());
+			break;
+		case 5:
+			v.showMenuClient();
+			switchMenuCliente(v.opcMenu6());
+			break;
 		}
 	}
-	
+
 	private void switchModifyProduct(int op) {
 		switch (op) {
-		case 1: Integer id6 = vista.leeEntero("Introduzca el ID del producto");
-				String name2 = vista.leeString("Introduzca el nombre del producto");
-				RepoProducto.modifyName(id6, name2);
-				RepoProducto.saveFile("producto.xml");
-				vista.showMenuModifyProduct();
-				switchModifyProduct(vista.opcMenu5());
-				break;
-		case 2: Integer id7 = vista.leeEntero("Introduzca el ID del producto");
-				String desc2 = vista.leeString("Introduzca la descripcion del producto");
-				RepoProducto.modifyDesc(id7, desc2);
-				RepoProducto.saveFile("producto.xml");
-				vista.showMenuModifyProduct();
-				switchModifyProduct(vista.opcMenu5());
-				break;
-		case 3: Integer id8 = vista.leeEntero("Introduzca el ID del producto");
-				Integer precio2 = vista.leeEntero("Introduzca el precio del producto");
-				RepoProducto.modifyPrize(id8, precio2);
-				RepoProducto.saveFile("producto.xml");
-				vista.showMenuModifyProduct();
-				switchModifyProduct(vista.opcMenu5());
-				break;
-		case 4: Integer id9 = vista.leeEntero("Introduzca el ID del producto");
-				Category cate2 = vista.leeCategory("Introduzca la nueva categoria");
-				RepoProducto.modifyCategory(id9, cate2);
-				RepoProducto.saveFile("producto.xml");
-				vista.showMenuModifyProduct();
-				switchModifyProduct(vista.opcMenu5());
-				break;
-		case 5: vista.showMenuProduct();
-				switchMenuProduct(vista.opcMenu5());
-				break;
+		case 1:
+			Integer id6 = v.leeEntero("Introduzca el ID del producto");
+			searchKeyProduct(id6);
+			String name2 = v.leeString("Introduzca el nombre del producto");
+			rProduct.modifyName(id6, name2);
+			rProduct.saveFile("producto.xml");
+			v.showMenuModifyProduct();
+			switchModifyProduct(v.opcMenu5());
+			break;
+		case 2:
+			Integer id7 = v.leeEntero("Introduzca el ID del producto");
+			searchKeyProduct(id7);
+			String desc2 = v.leeString("Introduzca la descripcion del producto");
+			rProduct.modifyDesc(id7, desc2);
+			rProduct.saveFile("producto.xml");
+			v.showMenuModifyProduct();
+			switchModifyProduct(v.opcMenu5());
+			break;
+		case 3:
+			Integer id8 = v.leeEntero("Introduzca el ID del producto");
+			searchKeyProduct(id8);
+			Integer precio2 = v.leeEntero("Introduzca el precio del producto");
+			rProduct.modifyPrize(id8, precio2);
+			rProduct.saveFile("producto.xml");
+			v.showMenuModifyProduct();
+			switchModifyProduct(v.opcMenu5());
+			break;
+		case 4:
+			Integer id9 = v.leeEntero("Introduzca el ID del producto");
+			searchKeyProduct(id9);
+			Category cate2 = v.leeCategory("Introduzca la nueva categoria");
+			rProduct.modifyCategory(id9, cate2);
+			rProduct.saveFile("producto.xml");
+			v.showMenuModifyProduct();
+			switchModifyProduct(v.opcMenu5());
+			break;
+		case 5:
+			v.showMenuProduct();
+			switchMenuProduct(v.opcMenu5());
+			break;
 		}
 	}
-	
+
 	private void switchMenuReservation(int op) {
 		switch (op) {
-		case 1: 
-				RepoReserva.saveFile("reserva.xml");
-				vista.showMenuReservation();
-				switchMenuReservation(vista.opcMenu6());
-				break;
+		case 1:
+			rReserva.saveFile("reserva.xml");
+			v.showMenuReservation();
+			switchMenuReservation(v.opcMenu6());
+			break;
 		case 2:
-				RepoReserva.saveFile("reserva.xml");
-				break;
-		case 3: vista.showMenuModifyReservation();
-				switchMenuModifyReservation(vista.opcMenu4());
-				break;
+			rReserva.saveFile("reserva.xml");
+			break;
+		case 3:
+			v.showMenuModifyReservation();
+			switchMenuModifyReservation(v.opcMenu4());
+			break;
 		case 4:
-				break;
+			break;
 		case 5:
-				break;
-		case 6: vista.showMenuClient();
-				switchMenuCliente(vista.opcMenu7());
-				break;
+			break;
+		case 6:
+			v.showMenuClient();
+			switchMenuCliente(v.opcMenu7());
+			break;
 		}
 	}
-	
+
 	private void switchMenuModifyReservation(int op) {
 		switch (op) {
 		case 1:
-				RepoReserva.saveFile("reserva.xml");
-				vista.showMenuModifyReservation();
-				switchMenuModifyReservation(vista.opcMenu4());
-				break;
+			rReserva.saveFile("reserva.xml");
+			v.showMenuModifyReservation();
+			switchMenuModifyReservation(v.opcMenu4());
+			break;
 		case 2:
-				RepoReserva.saveFile("reserva.xml");
-				vista.showMenuModifyReservation();
-				switchMenuModifyReservation(vista.opcMenu4());
-				break;
+			rReserva.saveFile("reserva.xml");
+			v.showMenuModifyReservation();
+			switchMenuModifyReservation(v.opcMenu4());
+			break;
 		case 3:
-				RepoReserva.saveFile("reserva.xml");
-				vista.showMenuModifyReservation();
-				switchMenuModifyReservation(vista.opcMenu4());
-				break;
-		case 4: vista.showMenuReservation();
-				switchMenuReservation(vista.opcMenu6());
-				break;
+			rReserva.saveFile("reserva.xml");
+			v.showMenuModifyReservation();
+			switchMenuModifyReservation(v.opcMenu4());
+			break;
+		case 4:
+			v.showMenuReservation();
+			switchMenuReservation(v.opcMenu6());
+			break;
 		}
 	}
-	
-	
-	
-	public void run() {
-		vista.showMainMenu();
-		Integer opc2 = vista.leeEntero("Introduzca la opcion");
-		switchMain(opc2);
-		
+
+	public Integer searchKeyProduct(Integer id) {
+		Integer newid;
+		while (rProduct.Contains(id)) {
+			v.print("Esta id ya esta asociada a otro producto");
+			newid = v.leeEntero("Introduzca la id");
+			id = newid;
+		}
+		return id;
 	}
-	
-	
+
+	public Integer searchKeyClient(Integer id) {
+		Integer newid;
+		while (rClient.Contains(id)) {
+			if (rProduct.Contains(id)) {
+				v.print("La id está disponible y se le ha asociado correctamente");
+			}
+			v.print("Esta id ya esta asociada a otro cliente\n");
+			newid = v.leeEntero("Introduzca otra id");
+			id = newid;
+		}
+		return id;
+	}
+
+	public Integer searchKeyClienttoModify(Integer id) {
+		int cont = 0;
+		Integer newid;
+		
+		while (!rClient.Contains(id)) {
+			cont++;
+			v.print("Esta id no esta asociada a ningun cliente");
+			newid = v.leeEntero("Introduzca otra id");
+			id = newid;
+			if (cont==3) {
+				System.out.println("Has agotado tus intentos volveras al Programa Principal en 3 segundos");
+				esperar(3);
+				v.showMainMenu();
+				switchMain(v.opcMenu3());
+			}
+		}
+		return id;
+	}
+
+	public void run() {
+		v.showMainMenu();
+		switchMain(v.opcMenu3());
+
+	}
+
+	public static void esperar(int segundos) {
+		try {
+			Thread.sleep(segundos * 1000);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+	}
 }
