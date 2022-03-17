@@ -75,7 +75,7 @@ public class Controller{
 	
 	private void switchMenuProduct(int op) {
 		switch (op) {
-		case 1: RepoProducto.addProduct(u.readProduct());
+		case 1: RepoProducto.addProduct(Utils.readProduct());
 				RepoProducto.saveFile("producto.xml");
 				vista.showMenuProduct();
 				switchMenuProduct(vista.opcMenu6());

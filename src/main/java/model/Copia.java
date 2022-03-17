@@ -12,6 +12,12 @@ public class Copia extends Product{
 		super(name, price, description, id, num_cop, category);
 		this.id_copia = id_copia;
 	}
+	
+
+
+	public Copia() {
+	}
+
 
 
 	private static final long serialVersionUID = 1L;

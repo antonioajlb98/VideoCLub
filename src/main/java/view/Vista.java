@@ -10,9 +10,13 @@ import model.Product;
 import model.RepoProduct;
 
 public class Vista {
-	RepoProduct RepoProducto = RepoProduct.getInstance();
-	Scanner teclado = new Scanner(System.in);
+	RepoProduct RepoProducto;
+	Scanner teclado ;
 
+	public Vista() {
+		teclado = new Scanner(System.in);
+		RepoProducto = RepoProduct.getInstance();
+	}
 	public void showMainMenu() {
 		System.out.println("------------------------------------------------------------------------------------------");
 		System.out.println("|  _         _    _    ___     ____    _______    _____    _        _     _    ____      |");                          

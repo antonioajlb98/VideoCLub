@@ -7,11 +7,10 @@ import model.Product;
 import model.RepoCopia;
 
 public class Utils {
-	Vista v;
 	Copia c;
 	RepoCopia rc;
 	
-	public Product readProduct() {
+	public static Product readProduct(Vista v) {
 		String name,desc;
 		Integer id,numcop;
 		Float price;
