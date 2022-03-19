@@ -99,13 +99,12 @@ public class Reservation implements Serializable {
 
     @Override
     public String toString() {
-        return "Reservation{" +
-                "ID=" + ID +
-                ", DateReser='" + DateReser + '\'' +
-                ", FinalDate='" + FinalDate + '\'' +
-                ", status=" + status +
-                ", client=" + client +
-                ", product=" + copia +
-                '}';
+        return "Reservation= " +
+                "\nID= " + ID +
+                "\nFecha de la Reserva= " + DateReser +
+                "\nFinalDate= " + FinalDate +
+                "\nEstado= " + status +
+                "\nClient= " + client +
+                "\nProducto= " + copia;
     }
 }

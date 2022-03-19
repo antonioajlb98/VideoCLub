@@ -76,6 +76,9 @@ public class RepoClient implements Serializable{
 		}
 		return added;
 	}
+	public Client getClient(Integer id) {
+		return clientlist.get(id);
+	}
 	
 	public Client removeClient(Integer ID) {
 		Client aux = new Client();
@@ -93,12 +96,15 @@ public class RepoClient implements Serializable{
 	public boolean Contains(Integer id) {
 		return clientlist.containsKey(id);
 	}
+	public boolean isEmpty() {
+		return clientlist.isEmpty();
+	}
 
 	public void saveFile(String url) {
 		JAXBContext contexto; 
 		try {
 			contexto = JAXBContext.newInstance(RepoClient.class);
-			Marshaller m = contexto.createMarshaller();
+			Marshaller m = ((JAXBContext) contexto).createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			
 			m.marshal(_instance, new File(url));
@@ -110,12 +116,12 @@ public class RepoClient implements Serializable{
 
 	public void loadFile(String url) {
 		JAXBContext contexto;
+
 		try {
 			contexto = JAXBContext.newInstance(RepoClient.class);
-		    Unmarshaller um = contexto.createUnmarshaller();
-		     
-		    RepoClient newRepoClient = (RepoClient) um.unmarshal( new File(url) );
-		    clientlist=newRepoClient.clientlist;
+			Unmarshaller um = contexto.createUnmarshaller();
+			RepoClient newRepoProduct = (RepoClient) um.unmarshal(new File(url));
+			clientlist = newRepoProduct.clientlist;
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}

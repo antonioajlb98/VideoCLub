@@ -88,9 +88,8 @@ public class RepoProduct {
 		try {
 			contexto = JAXBContext.newInstance(RepoProduct.class);
 			Unmarshaller um = contexto.createUnmarshaller();
-			RepoProduct newClub = (RepoProduct) um.unmarshal(new File(url));
-			productList = newClub.productList;
-			;
+			RepoProduct newRepoProduct = (RepoProduct) um.unmarshal(new File(url));
+			productList = newRepoProduct.productList;
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}

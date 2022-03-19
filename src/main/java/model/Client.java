@@ -109,6 +109,7 @@ public class Client implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Cliente" +ID+ "\n-Nombre=" + Name + " Telefono=" + Phone + " Fecha del Registro=" + time;
+		return "Client [ID=" + ID + ", Nombre=" + Name + ", Telefono=" + Phone + ", Fecha de Alta=" + time +"]"+"\n" 
+	            + "--------------------------------------------------------------------------------------------------------------";
 	}
 }

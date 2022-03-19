@@ -33,30 +33,16 @@ public class RepoReservation implements Serializable {
 		}
 		return _instance;
 	}
-
-	public boolean addReservation(Integer ID, Client client, Copia copia) {
-		boolean added = false;
-		if (client != null && copia != null) {
-			if (reservations != null && !reservations.containsKey(ID)) {
-				LocalDateTime created = LocalDateTime.now();
-				LocalDateTime expired = created.plusWeeks(7);
-
-				Status status = Status.RESERVADO;
-				Reservation reservation = new Reservation(ID, created, expired, status, client, copia);
-				reservations.put(ID, (Reservation) reservation);
-				added = true;
-			}
-		}
-		return added;
+	public HashMap<Integer, Reservation> getReservations(){
+		return reservations;
 	}
 
-	public boolean delReservation(Integer ID) {
-		boolean deleted = false;
-		if (reservations != null && reservations.containsKey(ID)) {
-			reservations.remove(ID);
-			deleted = true;
-		}
-		return deleted;
+	public void addReservation(Reservation r) {
+		reservations.put(r.getID(), r);
+	}
+
+	public Reservation delReservation(Integer ID) {
+		return reservations.remove(ID);
 	}
 
 	public void modifyFechaCreacion(Integer ID, LocalDateTime date) {
@@ -88,6 +74,12 @@ public class RepoReservation implements Serializable {
 				System.out.println("Reserva= " + r.getValue());
 			}
 		}
+	}
+	public boolean Contains(Integer id) {
+		return reservations.containsKey(id);
+	}
+	public boolean isEmpty() {
+		return reservations.isEmpty();
 	}
 
 	public void saveFile(String url) {

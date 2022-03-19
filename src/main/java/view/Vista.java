@@ -5,105 +5,138 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import enums.Category;
+import enums.Status;
 import model.Client;
 import model.Product;
+import model.RepoClient;
+import model.RepoCopia;
 import model.RepoProduct;
+import model.Reservation;
 
 public class Vista {
-	
+
 	RepoProduct RepoProducto = RepoProduct.getInstance();
+	RepoClient rClient = RepoClient.getInstance();
+	RepoCopia rCopia = RepoCopia.getInstance();
 	Scanner teclado = new Scanner(System.in);
-	
+
 	private Vista() {
 	}
-	private static Vista v;
+
+	private static Vista vista;
+
 	public static Vista getInstance() {
-		if(v==null) {
-			v= new Vista();
+		if (vista == null) {
+			vista = new Vista();
 		}
-		return v;
+		return vista;
 	}
-	
 
 	public void showMainMenu() {
-		System.out.println("------------------------------------------------------------------------------------------");
-		System.out.println("|  _         _    _    ___     ____    _______    _____    _        _     _    ____      |");                          
-		System.out.println("| |*|       |*|  |*|  |***|   |****|  |*******|  |*****|  |*|      |*|   |*|  |****|     |");
-		System.out.println("|  |*|     |*|   |*|  |*  *|  |*|     |*|   |*|  |*|      |*|      |*|   |*|  |*   *|    |");
-		System.out.println("|   |*|   |*|    |*|  |*   *| |****|  |*|   |*|  |*|      |*|      |*|   |*|  |***|      |");
-		System.out.println("|    |*| |*|     |*|  |*  *|  |*|     |*|   |*|  |*|      |*|___   |*|___|*|  |*   *|    |");
-		System.out.println("|      |**|      |*|  |***|   |****|  |*******|  |*****|  |*****|  |****** |  |****|     |");
-		System.out.println("|                                                                                        |");
-		System.out.println("|----------------------------------------------------------------------------------------|");
-	    System.out.println("                                                                                          ");
-	    System.out.println("                                                                                          ");
-	    System.out.println("------------------------------------------------------------------------------------------");
-		System.out.println("|                                 1. Clientes                                            |");
-		System.out.println("|                                 2. Productos                                           |");
-		System.out.println("|                                 3. Salir                                               |");
-		System.out.println("-----------------------------------------------------------------------------------------");
+		System.out
+				.println("------------------------------------------------------------------------------------------");
+		System.out
+				.println("|  _         _    _    ___     ____    _______    _____    _        _     _    ____      |");
+		System.out
+				.println("| |*|       |*|  |*|  |***|   |****|  |*******|  |*****|  |*|      |*|   |*|  |****|     |");
+		System.out
+				.println("|  |*|     |*|   |*|  |*  *|  |*|     |*|   |*|  |*|      |*|      |*|   |*|  |*   *|    |");
+		System.out
+				.println("|   |*|   |*|    |*|  |*   *| |****|  |*|   |*|  |*|      |*|      |*|   |*|  |***|      |");
+		System.out
+				.println("|    |*| |*|     |*|  |*  *|  |*|     |*|   |*|  |*|      |*|___   |*|___|*|  |*   *|    |");
+		System.out
+				.println("|      |**|      |*|  |***|   |****|  |*******|  |*****|  |*****|  |****** |  |****|     |");
+		System.out
+				.println("|                                                                                        |");
+		System.out
+				.println("|----------------------------------------------------------------------------------------|");
+		System.out
+				.println("                                                                                          ");
+		System.out
+				.println("                                                                                          ");
+		System.out
+				.println("------------------------------------------------------------------------------------------");
+		System.out
+				.println("|                                 1. Clientes                                            |");
+		System.out
+				.println("|                                 2. Productos                                           |");
+		System.out
+				.println("|                                 3. Salir                                               |");
+		this.print("-----------------------------------------------------------------------------------------");
 	}
 
-
 	public void showMenuClient() {
-		System.out.println("1. Anadir cliente");
-		System.out.println("2. Eliminar cliente");
-		System.out.println("3. Modificar cliente");
-		System.out.println("4. Mostrar clientes");
-		System.out.println("5. Buscar Cliente por ID");
-		System.out.println("6. Reservas");
-		System.out.println("7. Volver");
+		this.print("1. Anadir cliente");
+		this.print("2. Eliminar cliente");
+		this.print("3. Modificar cliente");
+		this.print("4. Mostrar clientes");
+		this.print("5. Buscar Cliente por ID");
+		this.print("6. Reservas");
+		this.print("7. Volver");
 	}
 
 	public void showMenuProduct() {
-		System.out.println("1. Anadir producto");
-		System.out.println("2. Eliminar producto");
-		System.out.println("3. Modificar producto");
-		System.out.println("4. Mostrar producto");
-		System.out.println("5. Copias");
-		System.out.println("6. Volver");
+		this.print("1. Anadir producto");
+		this.print("2. Eliminar producto");
+		this.print("3. Modificar producto");
+		this.print("4. Mostrar producto");
+		this.print("5. Buscar Producto");
+		this.print("6. Volver");
 	}
 
 	public void showMenuReservation() {
-		System.out.println("1. Crear reserva");
-		System.out.println("2. Eliminar reserva");
-		System.out.println("3. Modificar reserva");
-		System.out.println("4. Mostrar reservas");
-		System.out.println("5. Volver");
+		this.print("1. Crear reserva");
+		this.print("2. Eliminar reserva");
+		this.print("3. Modificar reserva");
+		this.print("4. Mostrar reservas");
+		this.print("5. Buscar Reserva por id");
+		this.print("5. Volver");
 	}
 
 	public void showMenuModifyClient() {
-		System.out.println("1. Modificar nombre");
-		System.out.println("2. Modificar telefono");
-		System.out.println("3. Modificar direccion");
-		System.out.println("4. Modificar edad");
-		System.out.println("5. Volver");
+		this.print("1. Modificar nombre");
+		this.print("2. Modificar telefono");
+		this.print("3. Modificar direccion");
+		this.print("4. Modificar edad");
+		this.print("5. Volver");
 	}
 
 	public void showMenuModifyProduct() {
-		System.out.println("1. Modificar nombre");
-		System.out.println("2. Modificar descripcion");
-		System.out.println("3. Modificar precio");
-		System.out.println("4. Modificar categoria");
-		System.out.println("5. Volver");
+		this.print("1. Modificar nombre");
+		this.print("2. Modificar descripcion");
+		this.print("3. Modificar precio");
+		this.print("4. Modificar categoria");
+		this.print("5. Volver");
 	}
 
 	public void showMenuModifyReservation() {
-		System.out.println("1. Modificar fecha de creacion");
-		System.out.println("2. Modificar fecha final");
-		System.out.println("3. Modificar estado de la reserva");
-		System.out.println("4. Volver");
+		this.print("1. Modificar fecha de creacion");
+		this.print("2. Modificar fecha final");
+		this.print("3. Modificar estado de la reserva");
+		this.print("4. Volver");
 	}
+
 	public void showCategoryMenu() {
-		System.out.println("1. Peliculas");
-		System.out.println("2. Juegos");
-		System.out.println("3. Series");
+		this.print("1. Peliculas");
+		this.print("2. Juegos");
+		this.print("3. Series");
 
 	}
-	public void showClientList(HashMap <Integer, Client> c){
-		for(Integer key:c.keySet()) {
-			System.out.println("ID: " +key+ "Value: " +c.get(key));
+	public void showStatusMenu() {
+		this.print("1. Entragado");
+		this.print("2. Reservado");
+		this.print("3. Expirado");
+
+	}
+
+	public void showClientList(HashMap<Integer, Client> c) {
+		for (Integer key : c.keySet()) {
+			vista.showObject(c.get(key));
 		}
+	}
+	public void showCopyList(Integer id) {
+		rCopia.CopyByIdProduct(id);
 	}
 
 	public Integer leeEntero(String frase) {
@@ -153,9 +186,12 @@ public class Vista {
 		boolean valid = false;
 		Integer opcion = 0;
 		do {
+			valid = false;
 			opcion = leeEntero("Introduzca una opcion");
-			if (opcion < 1 || opcion > 3)
-				;
+			if (opcion < 1 || opcion > 3) {
+				System.out.println("Debe insertar un valor valido");
+				valid = true;
+			}
 		} while (valid);
 		return opcion;
 	}
@@ -164,9 +200,12 @@ public class Vista {
 		boolean valid = false;
 		Integer opcion = 0;
 		do {
+			valid=false;
 			opcion = leeEntero("Introduzca una opcion");
-			if (opcion < 1 || opcion > 6)
-				;
+			if (opcion < 1 || opcion > 6) {
+				System.out.println("Debe insertar un valor valido");
+				valid = true;
+			}
 		} while (valid);
 		return opcion;
 	}
@@ -175,9 +214,12 @@ public class Vista {
 		boolean valid = false;
 		Integer opcion = 0;
 		do {
+			valid=false;
 			opcion = leeEntero("Introduzca una opcion");
-			if (opcion < 1 || opcion > 5)
-				;
+			if (opcion < 1 || opcion > 5) {
+				System.out.println("Debe insertar un valor valido");
+				valid = true;
+			}
 		} while (valid);
 		return opcion;
 	}
@@ -186,9 +228,12 @@ public class Vista {
 		boolean valid = false;
 		Integer opcion = 0;
 		do {
+			valid=false;
 			opcion = leeEntero("Introduzca una opcion");
-			if (opcion < 1 || opcion > 4)
-				;
+			if (opcion < 1 || opcion > 4) {
+				System.out.println("Debe insertar un valor valido");
+				valid = true;
+			}
 		} while (valid);
 		return opcion;
 	}
@@ -197,26 +242,37 @@ public class Vista {
 		boolean valid = false;
 		Integer opcion = 0;
 		do {
+			valid=false;
 			opcion = leeEntero("Introduzca una opcion");
-			if (opcion < 1 || opcion > 7)
-				;
+			if (opcion < 1 || opcion > 7) {
+				System.out.println("Debe insertar un valor valido");
+				valid = true;
+			}
 		} while (valid);
 		return opcion;
 	}
 
 	public void showProductList(HashMap<Integer, Product> Lista) {
 		for (Integer key : Lista.keySet()) {
-			System.out.println(Lista.get(key));
+			this.showObject(Lista.get(key));
+		}
+		
+	}
+	public void showReservaList(HashMap<Integer, Reservation> Lista) {
+		for (Integer key : Lista.keySet()) {
+			this.showObject(Lista.get(key));
 		}
 	}
+
 	public void showObject(Object o) {
 		System.out.println(o);
 	}
+
 	public Category leeCategory(String f) {
 		this.print(f);
 		showCategoryMenu();
-		int opc=opcMenu3();
-		switch(opc) {
+		int opc = opcMenu3();
+		switch (opc) {
 		case 1:
 			return Category.PELICULAS;
 		case 2:
@@ -227,14 +283,20 @@ public class Vista {
 			return Category.PELICULAS;
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-
+	public Status leeStatus(String f) {
+		this.print(f);
+		showStatusMenu();
+		int opc = opcMenu3();
+		switch (opc) {
+		case 1:
+			return Status.ENTREGADO;
+		case 2:
+			return Status.RESERVADO;
+		case 3:
+			return Status.EXPIRADO;
+		default:
+			return Status.ENTREGADO;
+		}
+	}
 
 }

@@ -26,7 +26,9 @@ public class Controller {
 	Utils u = Utils.getInstance();
 
 	public void switchMain(int op) {
+		rProduct.loadFile("producto.xml");
 		switch (op) {
+
 		case 1:
 			v.showMenuClient();
 			switchMenuCliente(v.opcMenu7());
@@ -51,6 +53,7 @@ public class Controller {
 			break;
 		case 2:
 			Integer id6 = v.leeEntero("Introduce el ID del cliente");
+			searchKeyClienttoModify(id6);
 			v.showObject("Cliente Borrado= " + rClient.removeClient(id6));
 			rClient.saveFile("cliente.xml");
 			v.showMenuClient();
@@ -61,18 +64,21 @@ public class Controller {
 			switchMenuModifyClient(v.opcMenu6());
 			break;
 		case 4:
+			if (rClient.isEmpty()) {
+				v.print("No hay Clientes para mostrar");
+			}
 			v.showClientList(rClient.getClientList());
 			v.showMenuClient();
 			switchMenuCliente(v.opcMenu7());
 			break;
 		case 5:
 			Integer id = v.leeEntero("Introduce el ID del cliente");
+			searchKeyClienttoModify(id);
 			v.showObject(rClient.searchClient(id));
 			v.showMenuClient();
 			switchMenuCliente(v.opcMenu7());
 			break;
 		case 6:
-			v.showMenuReservation();
 			v.showMenuReservation();
 			switchMenuReservation(v.opcMenu6());
 			break;
@@ -93,6 +99,7 @@ public class Controller {
 			break;
 		case 2:
 			Integer id = v.leeEntero("Introduzca la ID del producto");
+			searchKeyProducttoModify(id);
 			rProduct.removeProduct(id);
 			rProduct.saveFile("producto.xml");
 			v.showMenuProduct();
@@ -112,6 +119,7 @@ public class Controller {
 			break;
 		case 5:
 			Integer id2 = v.leeEntero("Introduce el ID del producto");
+			searchKeyProducttoModify(id2);
 			v.showObject(rProduct.searchProduct(id2));
 			break;
 		case 6:
@@ -170,7 +178,7 @@ public class Controller {
 		switch (op) {
 		case 1:
 			Integer id6 = v.leeEntero("Introduzca el ID del producto");
-			searchKeyProduct(id6);
+			searchKeyProducttoModify(id6);
 			String name2 = v.leeString("Introduzca el nombre del producto");
 			rProduct.modifyName(id6, name2);
 			rProduct.saveFile("producto.xml");
@@ -179,7 +187,7 @@ public class Controller {
 			break;
 		case 2:
 			Integer id7 = v.leeEntero("Introduzca el ID del producto");
-			searchKeyProduct(id7);
+			searchKeyProducttoModify(id7);
 			String desc2 = v.leeString("Introduzca la descripcion del producto");
 			rProduct.modifyDesc(id7, desc2);
 			rProduct.saveFile("producto.xml");
@@ -188,7 +196,7 @@ public class Controller {
 			break;
 		case 3:
 			Integer id8 = v.leeEntero("Introduzca el ID del producto");
-			searchKeyProduct(id8);
+			searchKeyProducttoModify(id8);
 			Integer precio2 = v.leeEntero("Introduzca el precio del producto");
 			rProduct.modifyPrize(id8, precio2);
 			rProduct.saveFile("producto.xml");
@@ -197,7 +205,7 @@ public class Controller {
 			break;
 		case 4:
 			Integer id9 = v.leeEntero("Introduzca el ID del producto");
-			searchKeyProduct(id9);
+			searchKeyProducttoModify(id9);
 			Category cate2 = v.leeCategory("Introduzca la nueva categoria");
 			rProduct.modifyCategory(id9, cate2);
 			rProduct.saveFile("producto.xml");
@@ -214,20 +222,34 @@ public class Controller {
 	private void switchMenuReservation(int op) {
 		switch (op) {
 		case 1:
+			this.newReserva();
 			rReserva.saveFile("reserva.xml");
 			v.showMenuReservation();
 			switchMenuReservation(v.opcMenu6());
+
 			break;
 		case 2:
+			u.removeReserva();
 			rReserva.saveFile("reserva.xml");
+			v.showMenuReservation();
+			switchMenuReservation(v.opcMenu6());
 			break;
 		case 3:
 			v.showMenuModifyReservation();
 			switchMenuModifyReservation(v.opcMenu4());
 			break;
 		case 4:
+			if (rReserva.isEmpty()) {
+				v.print("No hay Reservas para mostrar");
+			}
+			v.showReservaList(rReserva.getReservations());
+			v.showMenuModifyReservation();
+			switchMenuModifyReservation(v.opcMenu4());
 			break;
 		case 5:
+			Integer id = v.leeEntero("Introduce el id de la Reserva a buscar");
+			searchKeyRerservationtoModify(id);
+			rReserva.searchReservation(id);
 			break;
 		case 6:
 			v.showMenuClient();
@@ -244,14 +266,14 @@ public class Controller {
 			switchMenuModifyReservation(v.opcMenu4());
 			break;
 		case 2:
-			rReserva.saveFile("reserva.xml");
 			v.showMenuModifyReservation();
 			switchMenuModifyReservation(v.opcMenu4());
+			rReserva.saveFile("reserva.xml");
 			break;
 		case 3:
-			rReserva.saveFile("reserva.xml");
 			v.showMenuModifyReservation();
 			switchMenuModifyReservation(v.opcMenu4());
+			rReserva.saveFile("reserva.xml");
 			break;
 		case 4:
 			v.showMenuReservation();
@@ -260,39 +282,17 @@ public class Controller {
 		}
 	}
 
-	public Integer searchKeyProduct(Integer id) {
-		Integer newid;
-		while (rProduct.Contains(id)) {
-			v.print("Esta id ya esta asociada a otro producto");
-			newid = v.leeEntero("Introduzca la id");
-			id = newid;
-		}
-		return id;
-	}
-
-	public Integer searchKeyClient(Integer id) {
-		Integer newid;
-		while (rClient.Contains(id)) {
-			if (rProduct.Contains(id)) {
-				v.print("La id está disponible y se le ha asociado correctamente");
-			}
-			v.print("Esta id ya esta asociada a otro cliente\n");
-			newid = v.leeEntero("Introduzca otra id");
-			id = newid;
-		}
-		return id;
-	}
 
 	public Integer searchKeyClienttoModify(Integer id) {
 		int cont = 0;
 		Integer newid;
-		
+
 		while (!rClient.Contains(id)) {
 			cont++;
 			v.print("Esta id no esta asociada a ningun cliente");
 			newid = v.leeEntero("Introduzca otra id");
 			id = newid;
-			if (cont==3) {
+			if (cont == 3) {
 				System.out.println("Has agotado tus intentos volveras al Programa Principal en 3 segundos");
 				esperar(3);
 				v.showMainMenu();
@@ -300,6 +300,56 @@ public class Controller {
 			}
 		}
 		return id;
+	}
+
+	public Integer searchKeyProducttoModify(Integer id) {
+		int cont = 0;
+		Integer newid;
+
+		while (!rProduct.Contains(id)) {
+			cont++;
+			v.print("Esta id no esta asociada a ningun producto");
+			newid = v.leeEntero("Introduzca otra id");
+			id = newid;
+			if (cont == 3) {
+				System.out.println("Has agotado tus intentos volveras al Programa Principal en 3 segundos");
+				esperar(3);
+				v.showMainMenu();
+				switchMain(v.opcMenu3());
+			}
+		}
+		return id;
+	}
+
+	public Integer searchKeyRerservationtoModify(Integer id) {
+		int cont = 0;
+		Integer newid;
+
+		while (!rReserva.Contains(id)) {
+			cont++;
+			v.print("Esta id no esta asociada a ninguna reserva");
+			newid = v.leeEntero("Introduzca otra id");
+			id = newid;
+			if (cont == 3) {
+				System.out.println("Has agotado tus intentos volveras al Programa Principal en 3 segundos");
+				esperar(3);
+				v.showMainMenu();
+				switchMain(v.opcMenu3());
+			}
+		}
+		return id;
+	}
+
+	public void newReserva() {
+		v.showClientList(rClient.getClientList());
+		Integer id_cliente = v.leeEntero("Introduzca la id del cliente que quiere hacer la reserva\n");
+		searchKeyClienttoModify(id_cliente);
+		v.showProductList(rProduct.getProductList());
+		Integer id_producto = v.leeEntero("Introduzca la id del producto que quiere hacer la reserva\n");
+		searchKeyProducttoModify(id_producto);
+		v.showCopyList(id_producto);
+		Integer id_copia = v.leeEntero("Introduzca la id de la copia que quiere reservar\n");
+		u.readReservation(rClient.getClient(id_cliente), rCopy.getCopy(id_copia));
 	}
 
 	public void run() {

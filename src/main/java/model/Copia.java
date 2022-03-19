@@ -39,6 +39,10 @@ public class Copia extends Product implements Serializable{
 		this.id_copia = id_copia;
 	}
 
+	public String toString() {
+		return "Copia del Producto= "+super.getName() +" ID copia= " + id_copia;
+	}
+
 	public Integer idGenerator(){
 		int max = 200;
 		int min= 1;
