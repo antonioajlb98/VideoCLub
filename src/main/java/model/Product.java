@@ -85,7 +85,7 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Nombre Del Producto=" + Name + "Precio=" + price + " Description=" + description + " ID=" + id + " Categoria=" + category + " Nº Copias=" + num_cop+"]"+"\n"
+		return " Nombre Del Producto=" + Name + ", Precio= " + price + ", Description= " + description + ", ID= " + id + ", Categoria= " + category + ", Nº Copias= " + num_cop+"\n"
 	            + "---------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
 	}
 

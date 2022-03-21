@@ -26,7 +26,7 @@ public class Controller {
 	Utils u = Utils.getInstance();
 
 	public void switchMain(int op) {
-		rProduct.loadFile("producto.xml");
+		//rProduct.loadFile("producto.xml");
 		switch (op) {
 
 		case 1:
@@ -349,6 +349,7 @@ public class Controller {
 		searchKeyProducttoModify(id_producto);
 		v.showCopyList(id_producto);
 		Integer id_copia = v.leeEntero("Introduzca la id de la copia que quiere reservar\n");
+		v.showObject(rCopy.getCopy(id_copia));
 		u.readReservation(rClient.getClient(id_cliente), rCopy.getCopy(id_copia));
 	}
 

@@ -7,6 +7,7 @@ import java.util.Scanner;
 import enums.Category;
 import enums.Status;
 import model.Client;
+import model.Copia;
 import model.Product;
 import model.RepoClient;
 import model.RepoCopia;
@@ -136,7 +137,11 @@ public class Vista {
 		}
 	}
 	public void showCopyList(Integer id) {
-		rCopia.CopyByIdProduct(id);
+		for (Copia c : rCopia.getListaCopias()) {
+			if (c.getID() == id) {
+				System.out.println(c);
+			}
+		}
 	}
 
 	public Integer leeEntero(String frase) {

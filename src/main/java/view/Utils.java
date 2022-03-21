@@ -1,6 +1,7 @@
 package view;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import enums.Category;
 import enums.Status;
@@ -71,7 +72,7 @@ public class Utils {
 	public Copia copyGenerator(Product p){
 		int cont=0;
 	while(cont<p.getNum_cop()) {
-			Integer idcopy=c.idGenerator();
+			Integer idcopy=idGenerator();
 			Copia c = new Copia(p.getName(),p.getPrice(),p.getDescription(),p.getID(),p.getNum_cop(),p.getCategory(),idcopy);
 			rCopy.addCopy(c);
 			cont++;
@@ -108,6 +109,18 @@ public class Utils {
 	public void removeReserva() {
 		Integer id = v.leeEntero("Introduzla el id de la reserva que quiera borrar");
 		Rr.delReservation(id);			
+	}
+	/**
+	 * Metodo que genera una id aleatoria 
+	 * @return Devuelve la id generada
+	 */
+	public Integer idGenerator(){
+		int max = 200;
+		int min= 1;
+		Integer n=0;
+		Random random = new Random();
+		n=random.nextInt(max + min) + min;
+		return n;
 	}
 	
 	
